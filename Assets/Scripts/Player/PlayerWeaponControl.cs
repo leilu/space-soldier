@@ -109,6 +109,12 @@ public class PlayerWeaponControl : MonoBehaviour {
             ToggleRightWeapon();
         }
 
+        if (leftMouseButtonClicked && !Input.GetMouseButton(0) && leftGun != null)
+        {
+            leftMouseButtonClicked = false;
+            Player.PlayerEnergy.energy -= leftGun.Release();
+        }
+
         if (rightMouseButtonClicked && !Input.GetMouseButton(1) && rightGun != null)
         {
             rightMouseButtonClicked = false;
