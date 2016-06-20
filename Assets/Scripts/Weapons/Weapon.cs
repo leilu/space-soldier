@@ -56,13 +56,15 @@ public abstract class Weapon : MonoBehaviour
         FacingLeft = true;
     }
 
-    protected void FireStandardProjectile(GameObject projectile)
+    protected void FireStandardProjectile(GameObject projectile, float missAmountDegrees = 0)
     {
         // this has to be done before setting velocity or it won't work.
         projectile.SetActive(true);
 
+        float angleOffset = Random.Range(-missAmountDegrees, missAmountDegrees);
+
         // bullet rotation uses the vector from gun to target, not from player to target.
-        Vector2 direction = VectorUtil.DirectionToMousePointer(transform);
+        Vector2 direction = VectorUtil.RotateVector(VectorUtil.DirectionToMousePointer(transform), angleOffset * Mathf.Deg2Rad);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         projectile.transform.rotation = Quaternion.Euler(0, 0, angle);
