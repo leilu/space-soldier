@@ -14,7 +14,7 @@ public class EnemyUtil {
     public static bool CanSee (Vector2 enemyPosition, Vector2 targetPosition, bool mustBeOnScreen = true)
     {
         return (!mustBeOnScreen || IsOnScreen(enemyPosition)) && Physics2D.Linecast(enemyPosition, targetPosition,
-            LayerMasks.SightObstructedLayerMask).transform == null;
+            LayerMasks.WallAndObstacleLayerMask).transform == null;
     }
 
     public static bool PathIsNotBlocked(BoxCollider2D enemyCollider, Vector2 startingPoint, Vector2 destinationPoint, float colliderSizeMultiplierX = 1.25f,
