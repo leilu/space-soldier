@@ -4,10 +4,12 @@ using System.Collections;
 public class BasicPlayerProjectile : MonoBehaviour
 {
     protected Rigidbody2D rb2d;
+    protected ProjectileDestroy projectileDestroy;
 
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        projectileDestroy = GetComponent<ProjectileDestroy>();
     }
 
     public int Damage
@@ -28,7 +30,7 @@ public class BasicPlayerProjectile : MonoBehaviour
         }
         if (isObstacle(other))
         {
-            GetComponent<ProjectileDestroy>().Destroy();
+            projectileDestroy.Destroy();
             Destructible destructible = other.GetComponent<Destructible>();
             if (destructible)
             {
