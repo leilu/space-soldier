@@ -9,7 +9,6 @@ public class ChargeBlastProperties : BasicPlayerProjectile
     public float ExplosionRadius { get; set; }
     public int ExplosionDamage { get; set; }
 
-    private ProjectileDestroy projectileDestroy;
     private Animator animator;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;

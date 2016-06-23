@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rb;
     private BoxCollider2D boxCollider;
     private Animator animator;
+    private Dash dash;
 
     public float speed;
     public float collisionDistance;
@@ -14,11 +15,12 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+        dash = GameObject.Find("Dash").GetComponent<Dash>();
 	}
 
     void Update()
     {
-        if (GameState.Paused || GameState.InputLocked)
+        if (GameState.Paused || GameState.InputLocked || dash.IsDashing())
         {
             return;
         }

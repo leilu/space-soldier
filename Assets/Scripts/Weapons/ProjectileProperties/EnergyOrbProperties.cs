@@ -7,7 +7,6 @@ public class EnergyOrbProperties : BasicPlayerProjectile
 
     private Animator animator;
     private Rigidbody2D rb;
-    private ProjectileDestroy projectileDestroy;
     private int enemyLayerMask = 1 << 9;
 
     void Awake()
