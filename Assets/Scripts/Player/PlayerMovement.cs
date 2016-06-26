@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour {
     public int wallSpriteTileLayer;
     public float colliderMovementMultiplier;
 
-
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
     private Animator animator;
@@ -21,9 +20,9 @@ public class PlayerMovement : MonoBehaviour {
         dash = GameObject.Find("Dash").GetComponent<Dash>();
 	}
 
-    void FixedUpdate()
+    void Update()
     {
-        if (GameState.Paused || GameState.InputLocked || dash.IsDashing())
+        if (GameState.Paused || GameState.InputLocked)
         {
             return;
         }
@@ -35,8 +34,16 @@ public class PlayerMovement : MonoBehaviour {
         {
             TutorialEngine.Instance.Trigger(TutorialTrigger.Walk);
         }
+    }
 
-        Vector2 newVelocity = dash.IsDashing() ? rb2d.velocity : new Vector2(inputX, inputY).normalized * speed;
+    void FixedUpdate()
+    {
+        if (dash.IsDashing())
+        {
+            return;
+        }
+
+        Vector2 newVelocity = new Vector2(inputX, inputY).normalized * speed;
 
         Vector2 colliderMin = new Vector2(boxCollider.bounds.min.x + colliderMovementMultiplier * boxCollider.bounds.extents.x,
             boxCollider.bounds.min.y + colliderMovementMultiplier * boxCollider.bounds.extents.y);
@@ -71,5 +78,4 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetInteger("HorizontalAxis", (int)newVelocity.x);
         animator.SetInteger("VerticalAxis", (int)newVelocity.y);
     }
-
 }

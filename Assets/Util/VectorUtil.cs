@@ -23,6 +23,12 @@ public class VectorUtil {
         return new Vector2(mouse.x - screenPoint.x, mouse.y - screenPoint.y).normalized;
     }
 
+    public static float DistanceToMousePointer(Transform transform)
+    {
+        // Must convert to Vector2 - otherwise distance is made incorrect by the Z-axis.
+        return ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position).magnitude;
+    }
+
     public static float AngleToMousePointer(Transform transform)
     {
         Vector2 offset = VectorUtil.DirectionToMousePointer(transform);
