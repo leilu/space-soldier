@@ -17,6 +17,11 @@ public class EnemyHealth : MonoBehaviour {
 
     public int health = 20;
 
+    public void InflictDamage(int damagePoints)
+    {
+        InflictDamage(damagePoints, Vector2.zero);
+    }
+
     public void InflictDamage(int damagePoints, Vector2 velocity)
     {
         if (guarded)

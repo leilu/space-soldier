@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (dash.IsDashing())
+        if (GameState.Paused || GameState.InputLocked || dash.IsDashing())
         {
             return;
         }

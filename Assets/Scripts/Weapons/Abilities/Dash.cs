@@ -84,10 +84,16 @@ public class Dash : Weapon {
         return dict;
     }
 
-    void Start()
+    void Start ()
     {
         rb2d = Player.PlayerTransform.GetComponent<Rigidbody2D>();
         boxCollider2D = Player.PlayerTransform.GetComponent<BoxCollider2D>();
+        dashing = false;
+    }
+
+    void OnLevelWasLoaded ()
+    {
+        dashing = false;
     }
 
     public bool IsDashing()
