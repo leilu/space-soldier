@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour {
     private float hitDuration;
 
     private SpriteRenderer spriteRenderer;
+    private Dash dash;
 
     private bool hitInProgress = false;
 
@@ -21,10 +22,16 @@ public class PlayerHealth : MonoBehaviour {
         healthSlider.maxValue = healthPoints;
         healthSlider.value = healthPoints;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        dash = GameObject.Find("Dash").GetComponent<Dash>();
     }
 
     public void InflictDamage(int damage)
     {
+        if (dash.IsDashing())
+        {
+            return;
+        }
+
         healthPoints -= damage;
         healthSlider.value = healthPoints;
 

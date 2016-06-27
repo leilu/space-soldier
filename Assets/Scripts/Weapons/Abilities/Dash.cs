@@ -12,6 +12,12 @@ public class Dash : Weapon {
     private float targetDistanceStopThreshold;
     [SerializeField]
     private float boxCastOffset;
+    [SerializeField]
+    private float minDashAmount;
+    [SerializeField]
+    private float wallGlideBoxScale;
+    [SerializeField]
+    private float minWallGlideDotProduct;
 
     public bool dashing = false;
     private int waypointIndex;
@@ -38,35 +44,47 @@ public class Dash : Weapon {
                 float originalDistance = obstacle.distance + boxCastOffset;
 
                 Vector2 currPos = Player.PlayerTransform.position + dashDir * originalDistance;
+                bool alreadyTouchingCollider = false;
 
                 if (originalDistance > boxCastOffset)
                 {
                     waypoints.Add(currPos);
+                } else
+                {
+                    currPos = Player.PlayerTransform.position;
+                    alreadyTouchingCollider = true;
                 }
 
                 Vector2 newDir = CalculateNewDirection(dashDir, obstacle.normal);
                 if (newDir != Vector2.zero)
                 {
-                    obstacle = Physics2D.BoxCast(currPos + .05f * obstacle.normal, boxCollider2D.size, 0, newDir, maxDashDistance,
+                    Vector2 dashOrigin = alreadyTouchingCollider ? (Vector2)Player.PlayerTransform.position : currPos + .05f * obstacle.normal;
+                    obstacle = Physics2D.BoxCast(dashOrigin, boxCollider2D.size * (alreadyTouchingCollider ? wallGlideBoxScale : 1), 0, newDir, maxDashDistance,
                         LayerMasks.MovementObstructedLayerMask);
-                    currPos += newDir * (obstacle.transform == null ? maxDashDistance - originalDistance :
-                        Mathf.Min(obstacle.distance, maxDashDistance - originalDistance));
-                    waypoints.Add(currPos);
-                } else if (originalDistance <= boxCastOffset)
-                {
-                    return 0;
+                    float subtrahend = newDir.x == 0 ? (1 - wallGlideBoxScale) * boxCollider2D.size.y / 2
+                        : (1 - wallGlideBoxScale) * boxCollider2D.size.x / 2;
+                    float distanceTraveled = (obstacle.transform == null ? maxDashDistance - originalDistance :
+                        Mathf.Min(obstacle.distance, maxDashDistance - originalDistance)) - subtrahend;
+                    if (distanceTraveled > minDashAmount)
+                    {
+                        currPos += newDir * distanceTraveled;
+                        waypoints.Add(currPos);
+                    }
                 }
             } else
             {
                 waypoints.Add(Player.PlayerTransform.position + dashDir * maxDashDistance);
             }
 
-            rb2d.velocity = Vector2.zero;
-            nextFiringTime = Time.time + FiringDelay;
-            dashing = true;
-            dashStartTime = Time.time;
+            if (waypoints.Count > 0)
+            {
+                rb2d.velocity = Vector2.zero;
+                nextFiringTime = Time.time + FiringDelay;
+                dashing = true;
+                dashStartTime = Time.time;
 
-            return energyRequirement;
+                return energyRequirement;
+            }
         }
 
         return 0;
@@ -78,7 +96,7 @@ public class Dash : Weapon {
         float ninetyDegreesInRadians = Mathf.PI / 2;
         float rotationRadians = Vector3.Cross(dashDir, normal).z < 0 ? ninetyDegreesInRadians - dashDirNormalAngle
             : dashDirNormalAngle - ninetyDegreesInRadians;
-        return Vector2.Dot(dashDir, normal) < -.9f ? Vector2.zero : VectorUtil.RotateVector(dashDir, rotationRadians);
+        return Vector2.Dot(dashDir, normal) < minWallGlideDotProduct ? Vector2.zero : VectorUtil.RotateVector(dashDir, rotationRadians);
     }
 
     void FixedUpdate ()
