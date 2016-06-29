@@ -130,8 +130,14 @@ public class PlayerWeaponControl : MonoBehaviour {
         HideWeapon();
         do
         {
-            weaponIndex = weaponIndex == weapons.Length - 1 ? 0 : ++weaponIndex;
-            weaponsExamined += dir;
+            if (dir == 1)
+            {
+                weaponIndex = weaponIndex == weapons.Length - 1 ? 0 : ++weaponIndex;
+            } else
+            {
+                weaponIndex = weaponIndex == 0 ? weapons.Length - 1 : --weaponIndex;
+            }
+            weaponsExamined++;
         } while (!weapons[weaponIndex].Occupied && weaponsExamined < weapons.Length);
 
         if (originalWeaponIndex != weaponIndex && currentWeapon != null && mouseButtonClicked)
