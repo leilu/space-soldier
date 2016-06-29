@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using SpriteTile;
-using System.Linq; // ANKI DIS SHIET
+using System.Linq;
 
 public class NearbyEnemyPositionAssigner : MonoBehaviour {
 
