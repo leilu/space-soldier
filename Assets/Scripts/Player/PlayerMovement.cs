@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
-using SpriteTile;
 
 public class PlayerMovement : MonoBehaviour {
     public float speed;
     public float collisionDistance;
     public int wallSpriteTileLayer;
     public float colliderMovementMultiplier;
+    public Dash Dash;
 
     private Rigidbody2D rb2d;
     private BoxCollider2D boxCollider;
     private Animator animator;
-    private Dash dash;
     private float inputX, inputY;
 
     void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
-        dash = GameObject.Find("Dash").GetComponent<Dash>();
 	}
 
     void Update()
@@ -38,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (GameState.Paused || GameState.InputLocked || dash.IsDashing())
+        if (GameState.Paused || GameState.InputLocked || Dash != null && Dash.IsDashing())
         {
             return;
         }

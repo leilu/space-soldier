@@ -26,7 +26,6 @@ public class Dash : Weapon {
     private BoxCollider2D boxCollider2D;
     private List<Vector2> waypoints;
     private RaycastHit2D obstacle;
-    private PlayerMovement playerMovement;
 
     public override float Click ()
     {
@@ -166,6 +165,8 @@ public class Dash : Weapon {
 
     void Awake ()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        // Since GameObject.Find doesn't work on inactive objects (lame!)
+        Player.PlayerTransform.GetComponent<PlayerMovement>().Dash = this;
+        Player.PlayerTransform.GetComponent<PlayerHealth>().Dash = this;
     }
 }

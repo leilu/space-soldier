@@ -137,7 +137,8 @@ public class SniperAI : EnemyAI {
 
     void Aim(Vector2 target)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, target - (Vector2)transform.position, 20, LayerMasks.SniperAimLayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, target - (Vector2)transform.position, Mathf.Infinity,
+            LayerMasks.EnemySniperLayerMask);
         lineRenderer.SetPosition(0, transform.position);
         lineRenderer.SetPosition(1, hit.point);
     }

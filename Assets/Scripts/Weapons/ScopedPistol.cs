@@ -1,39 +1,54 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 
 public class ScopedPistol : Weapon {
+    [SerializeField]
+    private int damage;
+    [SerializeField]
+    private float energyCost;
 
     private LineRenderer lineRenderer;
+    private RaycastHit2D hit;
 
     public override float Click ()
     {
-        throw new NotImplementedException();
+        return 0;
     }
 
     public override string GetDescription ()
     {
-        throw new NotImplementedException();
+        return "A stronger and more accurate pistol with a scope.";
     }
 
+    // TODO: Make this virtual since it is the exact same in almost all cases
     public override float GetEnergyRequirement ()
     {
-        throw new NotImplementedException();
+        return energyCost;
     }
 
     public override string GetName ()
     {
-        throw new NotImplementedException();
+        return "Scoped Pistol";
     }
 
     public override Dictionary<string, object> GetProperties ()
     {
-        throw new NotImplementedException();
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        dict.Add(WeaponProperties.EnergyCost, GetEnergyRequirement());
+        dict.Add(WeaponProperties.Damage, damage);
+        return dict;
     }
 
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
+    }
+
+    void Update()
+    {
+        hit = Physics2D.Raycast(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            - transform.position, Mathf.Infinity, LayerMasks.SniperLayerMask);
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, hit.point);
     }
 }
