@@ -127,7 +127,6 @@ public class PlayerWeaponControl : MonoBehaviour {
     {
         int weaponsExamined = 0;
         int originalWeaponIndex = weaponIndex;
-        HideWeapon();
         DisableWeaponIfExists(currentWeapon);
         do
         {
@@ -250,14 +249,6 @@ public class PlayerWeaponControl : MonoBehaviour {
         if (leftGun)
         {
             leftGun.transform.rotation = Quaternion.Euler(0, leftGun.transform.eulerAngles.y, leftGun.FacingLeft ? -angle - 180 : angle);
-        }
-    }
-
-    void HideWeapon()
-    {
-        if (leftGun)
-        {
-            leftGun.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
