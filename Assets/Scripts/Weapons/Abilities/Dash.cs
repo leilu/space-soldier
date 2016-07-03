@@ -26,6 +26,7 @@ public class Dash : Weapon {
     private BoxCollider2D boxCollider2D;
     private List<Vector2> waypoints;
     private RaycastHit2D obstacle;
+    private PlayerMovement playerMovement;
 
     public override float Click ()
     {
@@ -161,5 +162,10 @@ public class Dash : Weapon {
     public void StopDash()
     {
         dashing = false;
+    }
+
+    void Awake ()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
     }
 }

@@ -40,7 +40,7 @@ public class InventoryManager : MonoBehaviour {
         for (int i = 0; i < slotTransforms.Count; i++)
         {
             InventorySlot inventorySlot = slotTransforms[i].GetComponent<InventorySlot>();
-            if (!inventorySlot.Occupied && skillType == inventorySlot.SkillType)
+            if (!inventorySlot.Occupied && inventorySlot.CanHostSkillType(skillType))
             {
                 slotNumber = i;
                 break;
@@ -67,7 +67,7 @@ public class InventoryManager : MonoBehaviour {
         newTile.transform.localScale = new Vector2(1, 1);
 
         newTile.GetComponent<RectTransform>().sizeDelta = tileSize;
-        newTile.GetComponent<InventoryTile>().Init(slotTransform, slotRects, info.Weapon, tooltip);
+        newTile.GetComponent<InventoryTile>().Init(slotTransform, slotRects, info.Weapon, tooltip, inventorySlot.SkillType);
         inventorySlot.SetTile(newTile.GetComponent<InventoryTile>());
         Player.PlayerWeaponControl.ReconfigureWeapons();
     }

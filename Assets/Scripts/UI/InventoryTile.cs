@@ -17,21 +17,24 @@ public class InventoryTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private RectTransform rectTransform;
     private Weapon weapon;
     private Tooltip tooltip;
+    private SkillType skillType;
+    private Vector3[] corners;
 
     private bool pointerDown = false;
     private bool pointerIn = false;
 
-    public void Init(Transform slotTransform, List<RectTransform> slotRects, Weapon weapon, Tooltip tooltip)
+    public void Init(Transform slotTransform, List<RectTransform> slotRects, Weapon weapon, Tooltip tooltip, SkillType skillType)
     {
         this.slotTransform = slotTransform;
         this.slotRects = slotRects;
         this.weapon = weapon;
         this.tooltip = tooltip;
+        this.skillType = skillType;
         tileRectTransform = transform as RectTransform;
         canvasRectTransform = GetComponentInParent<Canvas>().transform as RectTransform;
         rectTransform = GetComponent<RectTransform>();
 
-        Vector3[] corners = new Vector3[4];
+        corners = new Vector3[4];
         tileRectTransform.GetWorldCorners(corners);
         // RectTransform doesn't give a way to get width/height in world units, so must hack it.
         rectWidth = corners[2].x - corners[0].x;
@@ -83,21 +86,39 @@ public class InventoryTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerUp (PointerEventData data)
     {
-        if (mostOverlappedRect && !mostOverlappedRect.GetComponent<InventorySlot>().Occupied)
+        if (mostOverlappedRect)
         {
-            InventorySlot oldSlot = slotTransform.GetComponent<InventorySlot>();
-            slotTransform = mostOverlappedRect.transform;
-            InventorySlot newSlot = slotTransform.GetComponent<InventorySlot>();
-            MoveTile(oldSlot, newSlot);
+            InventorySlot currSlot = slotTransform.GetComponent<InventorySlot>();
+            InventorySlot newSlot = mostOverlappedRect.transform.GetComponent<InventorySlot>();
 
-            Player.PlayerWeaponControl.ReconfigureWeapons();
+            if (!newSlot.Occupied && newSlot.CanHostSkillType(skillType))
+            {
+                MoveTile(currSlot, newSlot);
 
-            TriggerTutorialEventsIfNecessary();
+                Player.PlayerWeaponControl.ReconfigureWeapons();
+
+                TriggerTutorialEventsIfNecessary();
+
+                slotTransform = mostOverlappedRect.transform;
+            } else
+            {
+                mostOverlappedRect.GetComponent<Image>().color = Color.grey;
+            }
         }
 
         transform.position = slotTransform.position;
         pointerDown = false;
-        tooltip.Render(rectTransform, weapon);
+
+        if (CursorIsOnTile())
+        {
+            tooltip.Render(rectTransform, weapon);
+        }
+    }
+
+    bool CursorIsOnTile()
+    {
+        return Input.mousePosition.x >= corners[0].x && Input.mousePosition.x <= corners[2].x
+            && Input.mousePosition.y >= corners[0].y && Input.mousePosition.y <= corners[2].y;
     }
 
     void MoveTile(InventorySlot oldSlot, InventorySlot newSlot)

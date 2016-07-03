@@ -12,6 +12,7 @@ public abstract class Weapon : MonoBehaviour
     public Vector2 LeftOffset;
     public Vector2 RightOffset;
 
+    public bool Equipped = false;
     public bool FacingLeft = true;
 
     protected float nextFiringTime = 0;

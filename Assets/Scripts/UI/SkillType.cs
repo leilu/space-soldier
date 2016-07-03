@@ -1,3 +1,3 @@
 ﻿public enum SkillType {
-    Weapon, Ability
+    Weapon, Ability, All
 }

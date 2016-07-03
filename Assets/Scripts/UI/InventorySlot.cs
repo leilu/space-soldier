@@ -25,4 +25,9 @@ public class InventorySlot : MonoBehaviour {
     {
         this.tile = tile;
     }
+
+    public bool CanHostSkillType(SkillType type)
+    {
+        return SkillType == SkillType.All || type == SkillType;
+    }
 }

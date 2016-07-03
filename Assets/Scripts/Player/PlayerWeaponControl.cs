@@ -128,6 +128,7 @@ public class PlayerWeaponControl : MonoBehaviour {
         int weaponsExamined = 0;
         int originalWeaponIndex = weaponIndex;
         HideWeapon();
+        DisableWeaponIfExists(currentWeapon);
         do
         {
             if (dir == 1)
@@ -147,6 +148,7 @@ public class PlayerWeaponControl : MonoBehaviour {
         }
 
         currentWeapon = weapons[weaponIndex].GetWeaponIfExists();
+        EnableWeaponIfExists(currentWeapon);
         RevealWeapon();
     }
 
@@ -167,14 +169,13 @@ public class PlayerWeaponControl : MonoBehaviour {
 
     public void ReconfigureWeapons()
     {
-        HideWeapon();
-
         if (!leftWeapons[currentLeftWeaponIndex].Occupied)
         {
             ToggleLeftWeaponForward();
         } else if (!leftGun)
         {
             leftGun = leftWeapons[currentLeftWeaponIndex].GetWeaponIfExists();
+            EnableWeaponIfExists(leftGun);
         }
 
         if (!rightWeapons[currentRightWeaponIndex].Occupied)
@@ -184,6 +185,7 @@ public class PlayerWeaponControl : MonoBehaviour {
         else if (!rightGun)
         {
             rightGun = rightWeapons[currentRightWeaponIndex].GetWeaponIfExists();
+            EnableWeaponIfExists(rightGun);
         }
 
         if (!leftGun)
@@ -192,11 +194,27 @@ public class PlayerWeaponControl : MonoBehaviour {
         } else
         {
             playerAnimator.SetBool("Armed", true);
-            setUpWeapon(leftGun);
+            SetUpWeapon(leftGun);
         }
     }
 
-    void setUpWeapon(Weapon weapon)
+    void EnableWeaponIfExists(Weapon weapon)
+    {
+        if (weapon != null)
+        {
+            weapon.gameObject.SetActive(true);
+        }
+    }
+
+    void DisableWeaponIfExists(Weapon weapon)
+    {
+        if (weapon != null)
+        {
+            weapon.gameObject.SetActive(false);
+        }
+    }
+
+    void SetUpWeapon(Weapon weapon)
     {
         leftGun.GetComponent<SpriteRenderer>().enabled = true;
         Vector2 offset = VectorUtil.DirectionToMousePointer(transform);
