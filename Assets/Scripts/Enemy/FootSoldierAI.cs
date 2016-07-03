@@ -106,6 +106,7 @@ public class FootSoldierAI : EnemyAI {
 
     void DeactivateAttack()
     {
+        animator.SetBool("Firing", false);
         rb2d.velocity = Vector2.zero;
         DeactivateChase();
     }

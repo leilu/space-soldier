@@ -5,6 +5,7 @@
 		_MainTex ("Texture", 2D) = "white" {}
 		_SampleDistance ("Sample distance", Float) = 1
 		_SampleStrength ("Sample strength", Float) = 2
+		_MinCenterDistance ("Min center distance", Float) = .15
 		_Color("Tint", Color) = (1,1,1,1)
 	}
 	SubShader
@@ -44,6 +45,10 @@
 			sampler2D _MainTex;
 			float _SampleDistance;
 			float _SampleStrength;
+			float _MinCenterDistance;
+
+			static const float center = .5;
+
 			fixed4 _Color;
 
 			fixed3 frag (v2f i) : SV_Target
@@ -60,8 +65,8 @@
 				samples[8] = 0.05;
 				samples[9] = 0.08;
 
-				float2 dir = .5 - i.uv;
-				float dist = max(0, sqrt(dir.x * dir.x + dir.y * dir.y) - .15);
+				float2 dir = center - i.uv;
+				float dist = max(0, sqrt(dir.x * dir.x + dir.y * dir.y) - _MinCenterDistance);
 				dir = dir / dist;
 
 				float4 color = tex2D(_MainTex, i.uv);
@@ -70,7 +75,7 @@
 				for (int n = 0; n < 10; n++)
 					sum += tex2D(_MainTex, i.uv + dir * samples[n] * _SampleDistance);
 
-				sum /= 8.0;
+				sum /= 11.0;
 				float t = dist * _SampleStrength;
 				t = clamp(t, 0, 1.0);
 
