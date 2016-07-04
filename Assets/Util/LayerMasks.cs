@@ -6,5 +6,4 @@
     public static int WallAndObstacleLayerMask = 1 << 8 | 1 << 12;
     public static int MovementObstructedLayerMask = 1 << 4 | 1 << 8 | 1 << 12;
     public static int EnemySniperLayerMask = 1 << 4 | 1 << 8 | 1 << 12 | 1 << 13;
-    public static int SniperLayerMask = 1 << 4 | 1 << 8 | 1 << 12;
 }

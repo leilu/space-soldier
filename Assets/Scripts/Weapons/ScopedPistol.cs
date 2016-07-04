@@ -12,6 +12,18 @@ public class ScopedPistol : Weapon {
 
     public override float Click ()
     {
+        if (CanFire())
+        {
+            nextFiringTime = Time.time + FiringDelay;
+            GameObject bullet = StackPool.Pop();
+            Vector2 addend = GetStandardOffset();
+            bullet.transform.position = new Vector2(transform.position.x + addend.x, transform.position.y + addend.y);
+            bullet.GetComponent<BasicPlayerProjectile>().Damage = damage;
+            FireStandardProjectile(bullet);
+
+            return energyCost;
+        }
+
         return 0;
     }
 
@@ -44,11 +56,22 @@ public class ScopedPistol : Weapon {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
+    void OnEnable()
+    {
+        RenderLine();
+    }
+
     void Update()
     {
-        hit = Physics2D.Raycast(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            - transform.position, Mathf.Infinity, LayerMasks.SniperLayerMask);
-        lineRenderer.SetPosition(0, transform.position);
+        RenderLine();
+    }
+
+    void RenderLine()
+    {
+        Vector2 origin = (Vector2)transform.position + GetStandardOffset();
+        hit = Physics2D.Raycast(origin, Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            - transform.position, Mathf.Infinity, LayerMasks.WallAndObstacleLayerMask);
+        lineRenderer.SetPosition(0, origin);
         lineRenderer.SetPosition(1, hit.point);
     }
 }

@@ -106,7 +106,7 @@ public class BasicLevelGenerator : ILevelGenerator
         List<EnemySpawnConfig> possibleConfigs = configsBySize[size][difficulty];
         EnemySpawnConfig config = possibleConfigs[Random.Range(0, possibleConfigs.Count - 1)];
 
-        config.printConfig();
+        //config.printConfig();
 
         //return new List<SpawnData> {
         //    new SpawnData(3, 3, troopaPrefab)
@@ -114,10 +114,10 @@ public class BasicLevelGenerator : ILevelGenerator
 
         return new List<SpawnData> {
             //new SpawnData(3, 3, basicEnemyPrefab),
-            new SpawnData(3, 3, footSoldierPrefab),
-            new SpawnData(3, 3, gordoPrefab),
-            new SpawnData(2, 2, knightPrefab),
-            new SpawnData(1, 1, laserBearPrefab)
+            new SpawnData(1, 1, footSoldierPrefab),
+            //new SpawnData(3, 3, gordoPrefab),
+            //new SpawnData(2, 2, knightPrefab),
+            //new SpawnData(1, 1, laserBearPrefab)
             //new SpawnData(config.gordoTrapMinMax.x, config.gordoTrapMinMax.y, gordoTrapPrefab, false),
             //new SpawnData(config.kirbyMinMax.x, config.kirbyMinMax.y, kirbyPrefab),
             //new SpawnData(config.sniperMinMax.x, config.sniperMinMax.y, sniperPrefab)
