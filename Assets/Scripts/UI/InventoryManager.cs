@@ -49,11 +49,11 @@ public class InventoryManager : MonoBehaviour {
 
         if (slotNumber != -1)
         {
-            InstantiateTileAtPosition(info, slotNumber);
+            InstantiateTileAtPosition(info, slotNumber, skillType);
         }
     }
 
-    public void InstantiateTileAtPosition(InventoryTileInfo info, int position)
+    public void InstantiateTileAtPosition(InventoryTileInfo info, int position, SkillType skillType)
     {
         InventorySlot inventorySlot = slotTransforms[position].GetComponent<InventorySlot>();
 
@@ -67,7 +67,7 @@ public class InventoryManager : MonoBehaviour {
         newTile.transform.localScale = new Vector2(1, 1);
 
         newTile.GetComponent<RectTransform>().sizeDelta = tileSize;
-        newTile.GetComponent<InventoryTile>().Init(slotTransform, slotRects, info.Weapon, tooltip, inventorySlot.SkillType);
+        newTile.GetComponent<InventoryTile>().Init(slotTransform, slotRects, info.Weapon, tooltip, skillType);
         inventorySlot.SetTile(newTile.GetComponent<InventoryTile>());
         Player.PlayerWeaponControl.ReconfigureWeapons();
     }

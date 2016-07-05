@@ -43,7 +43,7 @@ public class PlayerWeaponControl : MonoBehaviour {
 
         if (GameState.TutorialMode)
         {
-            InventoryManager.Instance.InstantiateTileAtPosition(tileInfo, 6);
+            InventoryManager.Instance.InstantiateTileAtPosition(tileInfo, 6, SkillType.Weapon);
         } else
         {
             InventoryManager.Instance.InstantiateNewTile(tileInfo, SkillType.Weapon);

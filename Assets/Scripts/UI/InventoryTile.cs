@@ -17,7 +17,7 @@ public class InventoryTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private RectTransform rectTransform;
     private Weapon weapon;
     private Tooltip tooltip;
-    private SkillType skillType;
+    public SkillType skillType;
     private Vector3[] corners;
 
     private bool pointerDown = false;
