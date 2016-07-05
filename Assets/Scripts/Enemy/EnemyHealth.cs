@@ -30,7 +30,6 @@ public class EnemyHealth : MonoBehaviour {
         }
 
         health -= damagePoints;
-        GetComponent<LockOnIndicator>().Activate();
         if (enemyAI)
         {
             enemyAI.chasing = true;

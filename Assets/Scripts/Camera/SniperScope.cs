@@ -17,4 +17,19 @@ public class SniperScope : MonoBehaviour {
             Graphics.Blit(source, destination);
         }
     }
+
+    public void Activate()
+    {
+        scopeActivated = true;
+    }
+
+    public void Deactivate()
+    {
+        scopeActivated = false;
+    }
+
+    public bool IsActive()
+    {
+        return scopeActivated;
+    }
 }

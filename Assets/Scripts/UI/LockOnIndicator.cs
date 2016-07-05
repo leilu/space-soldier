@@ -12,6 +12,8 @@ public class LockOnIndicator : MonoBehaviour {
     private float angleDelta = Mathf.PI;
 
     private StackPool lockOnArrowPool;
+    private EnemyHealth enemyHealth;
+    private SniperScope sniperScope;
     private float currentRadius;
     private float currentAngle;
     private bool activated = false;
@@ -19,11 +21,13 @@ public class LockOnIndicator : MonoBehaviour {
 
     void Awake () {
         lockOnArrowPool = GameObject.Find("LockOnArrowPool").GetComponent<StackPool>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        sniperScope = Camera.main.GetComponent<SniperScope>();
     }
 
     public void Activate()
     {
-        if (!activated)
+        if (!activated && ShouldBeActive())
         {
             activated = true;
             currentAngle = 0;
@@ -73,7 +77,17 @@ public class LockOnIndicator : MonoBehaviour {
             }
 
             currentAngle += Time.deltaTime * angleDelta;
+
+            if (!ShouldBeActive())
+            {
+                Deactivate();
+            }
         }
+    }
+
+    bool ShouldBeActive()
+    {
+        return enemyHealth.health > 0 && sniperScope.IsActive();
     }
 
     void SetArrow(Transform t, float angle, float radius)
