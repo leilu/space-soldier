@@ -8,10 +8,14 @@ public class SniperRifle : Weapon
     [SerializeField]
     private float energyCost;
     [SerializeField]
-    private SniperScope sniperScope;
+    private float enhancedMaxScrollFraction;
+    [SerializeField]
+    private float modifiedPlayerSpeed;
 
-    private LineRenderer lineRenderer;
-    private RaycastHit2D hit;
+    private LineRenderer lineRenderer; 
+    private RaycastHit2D lineRendererHit;
+    private RaycastHit2D scopeLinecastHit;
+    private PlayerMovement playerMovement;
 
     public override float Click ()
     {
@@ -56,35 +60,58 @@ public class SniperRifle : Weapon
     void Awake ()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        playerMovement = Player.PlayerTransform.GetComponent<PlayerMovement>();
     }
 
     void OnEnable ()
     {
-        sniperScope.Activate();
+        // TODO: Cache
+        Camera.main.GetComponent<SniperScope>().Activate();
+        Camera.main.GetComponent<CameraControl>().SetMaxScrollFraction(enhancedMaxScrollFraction);
+        playerMovement.SetSpeed(modifiedPlayerSpeed);
+        
         RenderLine();
     }
 
     void OnDisable()
     {
-        sniperScope.Deactivate();
+        // TODO: Cache
+        Camera.main.GetComponent<SniperScope>().Deactivate();
+        Camera.main.GetComponent<CameraControl>().ResetMaxScrollFraction();
+        playerMovement.ResetSpeed();
     }
 
     void Update ()
     {
         RenderLine();
+
+        foreach (LockOnIndicator indicator in GameState.LockOnTargets)
+        {
+            Vector2 origin = (Vector2)transform.position + GetStandardOffset();
+            if (EnemyUtil.IsOnScreen(indicator.transform.position))
+            {
+                scopeLinecastHit = Physics2D.Linecast(origin, indicator.transform.position,
+                    LayerMasks.PlayerSniperLayerMask);
+                if (scopeLinecastHit != null && scopeLinecastHit.transform == indicator.transform)
+                {
+                    indicator.Activate();
+                } else
+                {
+                    indicator.Deactivate();
+                }
+            } else
+            {
+                indicator.Deactivate();
+            }
+        }
     }
 
     void RenderLine ()
     {
         Vector2 origin = (Vector2)transform.position + GetStandardOffset();
-        hit = Physics2D.Raycast(origin, Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            - transform.position, Mathf.Infinity, LayerMasks.PlayerSniperLayerMask);
+        lineRendererHit = Physics2D.Raycast(origin, Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            - (Vector3)origin, Mathf.Infinity, LayerMasks.PlayerSniperLayerMask);
         lineRenderer.SetPosition(0, origin);
-        lineRenderer.SetPosition(1, hit.point);
-
-        if (1 << hit.transform.gameObject.layer == LayerMasks.EnemyLayerMask)
-        {
-            hit.transform.GetComponent<LockOnIndicator>().Activate();
-        }
+        lineRenderer.SetPosition(1, lineRendererHit.point);
     }
 }

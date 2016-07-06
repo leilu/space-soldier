@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GameState : MonoBehaviour {
     public static int NumEnemiesRemaining = 0;
@@ -6,6 +7,7 @@ public class GameState : MonoBehaviour {
     public static bool InputLocked = false;
     public static bool TutorialMode = false;
     public static bool IsBossFight = false;
+    public static List<LockOnIndicator> LockOnTargets = new List<LockOnIndicator>();
 
     // These are for score tracking (to display at the end of the game)
     public static int NumEnemiesKilled = 0;

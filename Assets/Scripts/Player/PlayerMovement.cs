@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
-    public float speed;
+    public float defaultSpeed;
     public float collisionDistance;
     public int wallSpriteTileLayer;
     public float colliderMovementMultiplier;
@@ -11,12 +11,24 @@ public class PlayerMovement : MonoBehaviour {
     private BoxCollider2D boxCollider;
     private Animator animator;
     private float inputX, inputY;
+    private float speed;
 
     void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+        speed = defaultSpeed;
 	}
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public void ResetSpeed()
+    {
+        speed = defaultSpeed;
+    }
 
     void Update()
     {

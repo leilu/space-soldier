@@ -84,17 +84,17 @@ public class BasicLevelGenerator : ILevelGenerator
 
         if (rand == 1)
         {
-            Debug.Log("level size: small");
+            //Debug.Log("level size: small");
             return BasicLevelSize.Small;
         }
         else if (rand == 2)
         {
-            Debug.Log("level size: medium");
+            //Debug.Log("level size: medium");
             return BasicLevelSize.Medium;
         }
         else
         {
-            Debug.Log("level size: large");
+            //Debug.Log("level size: large");
             return BasicLevelSize.Large;
         }
     }

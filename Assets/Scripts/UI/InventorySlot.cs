@@ -28,11 +28,6 @@ public class InventorySlot : MonoBehaviour {
 
     public bool CanHostSkillType(SkillType type)
     {
-        bool canHost = SkillType == SkillType.All || type == SkillType;
-        if (!canHost)
-        {
-            Debug.Log("can't host, yo");
-        }
-        return canHost;
+        return SkillType == SkillType.All || type == SkillType;
     }
 }

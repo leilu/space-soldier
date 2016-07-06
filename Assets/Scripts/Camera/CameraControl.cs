@@ -11,7 +11,7 @@ public class CameraControl : MonoBehaviour {
     [SerializeField]
     private Texture2D crosshair4X;
     [SerializeField]
-    private float maxScrollFraction;
+    private float initialMaxScrollFraction;
     [SerializeField]
     private float cameraEdgeThreshold;
 
@@ -23,11 +23,13 @@ public class CameraControl : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
     private float lastScreenHeight;
     private CameraEvent cameraEvent;
+    private float maxScrollFraction;
 
     void Start()
     {
         rb = GameObject.Find("Soldier").GetComponent<Rigidbody2D>();
         transform.position = rb.position;
+        maxScrollFraction = initialMaxScrollFraction;
     }
 
     void Update()
@@ -131,6 +133,16 @@ public class CameraControl : MonoBehaviour {
     public void UnloadCameraEvent()
     {
         StartCoroutine(Do(cameraEvent.FocusTailWindow, () => cameraEvent.Completed = true));
+    }
+
+    public void SetMaxScrollFraction(float newMaxScrollFraction)
+    {
+        maxScrollFraction = newMaxScrollFraction;
+    }
+
+    public void ResetMaxScrollFraction()
+    {
+        maxScrollFraction = initialMaxScrollFraction;
     }
 
     IEnumerator Do(float waitTime, CameraFunction func)

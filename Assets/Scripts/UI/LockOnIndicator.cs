@@ -19,7 +19,8 @@ public class LockOnIndicator : MonoBehaviour {
     private bool activated = false;
     private GameObject arrow1, arrow2, arrow3, arrow4;
 
-    void Awake () {
+    void Awake ()
+    {
         lockOnArrowPool = GameObject.Find("LockOnArrowPool").GetComponent<StackPool>();
         enemyHealth = GetComponent<EnemyHealth>();
         sniperScope = Camera.main.GetComponent<SniperScope>();

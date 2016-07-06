@@ -22,6 +22,7 @@ public class EnemyDeath : MonoBehaviour {
             animator.SetBool("Killed", true);
             enemyAI.killed = true;
             gameObject.tag = "Killed";
+            gameObject.layer = LayerMask.NameToLayer("Killed");
 
             Player.PlayerExperience.IncrementExperience(experiencePoints);
             GameState.NumEnemiesKilled++;
@@ -29,7 +30,9 @@ public class EnemyDeath : MonoBehaviour {
             GameState.NumEnemiesRemaining--;
             gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Killed";
 
-            if(GameState.TutorialMode)
+            GameState.LockOnTargets.Remove(gameObject.GetComponent<LockOnIndicator>());
+
+            if (GameState.TutorialMode)
             {
                 TutorialEngine.Instance.Trigger(TutorialTrigger.EnemyKilled);
             }
