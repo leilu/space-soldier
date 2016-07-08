@@ -16,6 +16,7 @@ public class SniperRifle : Weapon
     private RaycastHit2D lineRendererHit;
     private RaycastHit2D scopeLinecastHit;
     private PlayerMovement playerMovement;
+    private GameObject sniperMiniCam;
 
     public override float Click ()
     {
@@ -61,6 +62,7 @@ public class SniperRifle : Weapon
     {
         lineRenderer = GetComponent<LineRenderer>();
         playerMovement = Player.PlayerTransform.GetComponent<PlayerMovement>();
+        sniperMiniCam = GameObject.Find("SniperMiniCam");
     }
 
     void OnEnable ()
@@ -103,6 +105,19 @@ public class SniperRifle : Weapon
             {
                 indicator.Deactivate();
             }
+        }
+
+        if (EnemyUtil.IsOnScreen(Player.PlayerTransform.position))
+        {
+            sniperMiniCam.GetComponent<MeshRenderer>().enabled = false;
+        } else
+        {
+            sniperMiniCam.GetComponent<MeshRenderer>().enabled = true;
+            Vector2 playerViewportPos = Camera.main.WorldToViewportPoint(Player.PlayerTransform.position);
+            float miniCamViewportX = Mathf.Clamp(playerViewportPos.x, 0, 1);
+            float miniCamViewportY = Mathf.Clamp(playerViewportPos.y, 0, 1);
+            Vector2 miniCamWorldCoords = Camera.main.ViewportToWorldPoint(new Vector2(miniCamViewportX, miniCamViewportY));
+            sniperMiniCam.transform.position = new Vector3(miniCamWorldCoords.x, miniCamWorldCoords.y, -10);
         }
     }
 
