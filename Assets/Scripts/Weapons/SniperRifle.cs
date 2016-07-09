@@ -11,12 +11,19 @@ public class SniperRifle : Weapon
     private float enhancedMaxScrollFraction;
     [SerializeField]
     private float modifiedPlayerSpeed;
+    [SerializeField]
+    private float miniCamEdgeThreshold;
+    [SerializeField]
+    private float miniCamPadding;
 
     private LineRenderer lineRenderer; 
     private RaycastHit2D lineRendererHit;
     private RaycastHit2D scopeLinecastHit;
+    private RaycastHit2D miniCamLinecastHit;
     private PlayerMovement playerMovement;
     private GameObject sniperMiniCam;
+    private MeshRenderer sniperMiniCamMeshRenderer;
+    private float sniperMiniCamOffset;
 
     public override float Click ()
     {
@@ -61,8 +68,11 @@ public class SniperRifle : Weapon
     void Awake ()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.sortingLayerName = "Default";
         playerMovement = Player.PlayerTransform.GetComponent<PlayerMovement>();
-        sniperMiniCam = GameObject.Find("SniperMiniCam");
+        sniperMiniCam = GameObject.Find("SniperMiniCamQuad");
+        sniperMiniCamMeshRenderer = sniperMiniCam.GetComponent<MeshRenderer>();
+        sniperMiniCamOffset = sniperMiniCam.GetComponent<MeshCollider>().bounds.size.x / 2 + miniCamPadding;
     }
 
     void OnEnable ()
@@ -80,6 +90,7 @@ public class SniperRifle : Weapon
         // TODO: Cache
         Camera.main.GetComponent<SniperScope>().Deactivate();
         Camera.main.GetComponent<CameraControl>().ResetMaxScrollFraction();
+        sniperMiniCamMeshRenderer.enabled = false;
         playerMovement.ResetSpeed();
     }
 
@@ -107,18 +118,35 @@ public class SniperRifle : Weapon
             }
         }
 
-        if (EnemyUtil.IsOnScreen(Player.PlayerTransform.position))
+        Vector2 viewportPoint = Camera.main.WorldToViewportPoint(Player.PlayerTransform.position);
+
+        if (viewportPoint.x > miniCamEdgeThreshold && viewportPoint.x < 1 - miniCamEdgeThreshold &&
+            viewportPoint.y > miniCamEdgeThreshold && viewportPoint.y < 1 - miniCamEdgeThreshold)
         {
-            sniperMiniCam.GetComponent<MeshRenderer>().enabled = false;
+            sniperMiniCamMeshRenderer.enabled = false;
         } else
         {
-            sniperMiniCam.GetComponent<MeshRenderer>().enabled = true;
-            Vector2 playerViewportPos = Camera.main.WorldToViewportPoint(Player.PlayerTransform.position);
-            float miniCamViewportX = Mathf.Clamp(playerViewportPos.x, 0, 1);
-            float miniCamViewportY = Mathf.Clamp(playerViewportPos.y, 0, 1);
-            Vector2 miniCamWorldCoords = Camera.main.ViewportToWorldPoint(new Vector2(miniCamViewportX, miniCamViewportY));
-            sniperMiniCam.transform.position = new Vector3(miniCamWorldCoords.x, miniCamWorldCoords.y, -10);
+            sniperMiniCamMeshRenderer.enabled = true;
+            RepositionSniperMiniCam();
         }
+    }
+
+    void RepositionSniperMiniCam()
+    {
+        Vector2 playerViewportPos = Camera.main.WorldToViewportPoint(Player.PlayerTransform.position);
+
+        float yViewportOffset = sniperMiniCamOffset / (Camera.main.orthographicSize * 2);
+        float xViewportOffset = sniperMiniCamOffset / (Camera.main.orthographicSize * 2 * Camera.main.aspect);
+
+        float miniCamViewportX = xViewportOffset, miniCamViewportY = 1 - yViewportOffset;
+
+        //if (playerViewportPos.x <= miniCamEdgeThreshold && playerViewportPos.y >= .8f -  miniCamEdgeThreshold)
+        //{
+        //    miniCamViewportY -= .2f;
+        //}
+
+        Vector2 miniCamWorldCoords = Camera.main.ViewportToWorldPoint(new Vector2(miniCamViewportX, miniCamViewportY));
+        sniperMiniCam.transform.position = new Vector3(miniCamWorldCoords.x, miniCamWorldCoords.y, 0);
     }
 
     void RenderLine ()

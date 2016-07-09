@@ -6,6 +6,8 @@ public class CameraSync : MonoBehaviour {
     private bool syncSize = true;
     [SerializeField]
     private bool syncPosition = true;
+    [SerializeField]
+    private float scalingFactor = 1;
 
     private Camera cam;
 
@@ -17,7 +19,7 @@ public class CameraSync : MonoBehaviour {
 	void Update () {
         if (syncSize)
         {
-            cam.orthographicSize = Camera.main.orthographicSize;
+            cam.orthographicSize = Camera.main.orthographicSize * scalingFactor;
         }
 
         if(syncPosition)

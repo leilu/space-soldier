@@ -48,7 +48,7 @@ public class LoadLevel : MonoBehaviour {
         Vector3 playerSpawn;
         GameObject player = GameObject.Find("Soldier");
 
-        Tile.SetCamera();
+        Tile.SetCamera(GameObject.Find("TileCamera").GetComponent<Camera>());
 
         if (TestingCityLevel)
         {
