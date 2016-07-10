@@ -22,7 +22,6 @@ public class Dash : Weapon {
     public bool dashing = false;
     private int waypointIndex;
     private Rigidbody2D rb2d;
-    private float dashStartTime = 0;
     private BoxCollider2D boxCollider2D;
     private List<Vector2> waypoints;
     private RaycastHit2D obstacle;
@@ -81,7 +80,6 @@ public class Dash : Weapon {
                 rb2d.velocity = Vector2.zero;
                 nextFiringTime = Time.time + FiringDelay;
                 dashing = true;
-                dashStartTime = Time.time;
 
                 return energyRequirement;
             }

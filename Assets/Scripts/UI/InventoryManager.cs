@@ -16,7 +16,6 @@ public class InventoryManager : MonoBehaviour {
 
     private List<RectTransform> slotRects;
     private Vector2 tileSize = new Vector2(50, 50);
-    private bool sizeHasBeenConfigured = false;
 
     void Awake ()
     {

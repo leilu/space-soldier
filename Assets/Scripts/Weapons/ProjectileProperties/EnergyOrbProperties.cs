@@ -6,13 +6,11 @@ public class EnergyOrbProperties : BasicPlayerProjectile
     public float ExplosionRadius { get; set; }
 
     private Animator animator;
-    private Rigidbody2D rb;
     private int enemyLayerMask = 1 << 9;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
         projectileDestroy = GetComponent<ProjectileDestroy>();
     }
 

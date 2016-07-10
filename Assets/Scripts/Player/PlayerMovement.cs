@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour {
     private Animator animator;
     private float inputX, inputY;
     private float speed;
+    private GameObject tileCamera;
 
     void Start () {
         rb2d = GetComponent<Rigidbody2D>();
@@ -19,6 +20,12 @@ public class PlayerMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
         speed = defaultSpeed;
 	}
+
+    public void SetFollowCamera(GameObject tileCamera)
+    {
+        this.tileCamera = tileCamera;
+        tileCamera.SetActive(false);
+    }
 
     public void SetSpeed(float newSpeed)
     {
@@ -87,5 +94,6 @@ public class PlayerMovement : MonoBehaviour {
         rb2d.velocity = newVelocity;
         animator.SetInteger("HorizontalAxis", (int)newVelocity.x);
         animator.SetInteger("VerticalAxis", (int)newVelocity.y);
+        tileCamera.transform.position = transform.position;
     }
 }

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public static PlayerEnergy PlayerEnergy;
     public static PlayerExperience PlayerExperience;
     public static PlayerWeaponControl PlayerWeaponControl;
+    public static PlayerMovement PlayerMovement;
 
 	void Awake () {
         Instance = gameObject;
@@ -16,5 +17,6 @@ public class Player : MonoBehaviour {
         PlayerExperience = Instance.GetComponent<PlayerExperience>();
         PlayerEnergy = Instance.GetComponent<PlayerEnergy>();
         PlayerWeaponControl = Instance.GetComponent<PlayerWeaponControl>();
+        PlayerMovement = Instance.GetComponent<PlayerMovement>();
 	}
 }

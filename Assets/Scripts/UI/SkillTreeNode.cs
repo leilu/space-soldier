@@ -15,14 +15,12 @@ public class SkillTreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public List<SkillDependency> Dependencies;
     public PlayerWeaponControl playerWeaponControl;
 
-    private Button button;
     private Text pointsText;
     private List<SkillTreeNode> children;
     private RectTransform rectTransform;
 
     void Awake()
     {
-        button = GetComponent<Button>();
         pointsText = GetComponentInChildren<Text>();
         children = new List<SkillTreeNode>();
         rectTransform = GetComponent<RectTransform>();

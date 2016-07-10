@@ -21,7 +21,6 @@ public class InventoryTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Vector3[] corners;
 
     private bool pointerDown = false;
-    private bool pointerIn = false;
 
     public void Init(Transform slotTransform, List<RectTransform> slotRects, Weapon weapon, Tooltip tooltip, SkillType skillType)
     {
@@ -189,7 +188,6 @@ public class InventoryTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerEnter (PointerEventData data)
     {
-        pointerIn = true;
         if (pointerDown)
         {
             return;
@@ -200,7 +198,6 @@ public class InventoryTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerExit (PointerEventData data)
     {
-        pointerIn = false;
         tooltip.Hide();
     }
 }

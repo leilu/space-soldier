@@ -8,7 +8,6 @@ public class BossLevelWallBuilder : MonoBehaviour {
     private static float SecondsBetweenPlacements = .3f;
     private static int BackupSteps = 3;
     private static int TriggerDistanceSquared = 60;
-    private static float CameraEventPauseSeconds = 1;
     private static float StartWaitTime = .2f;
     private static float EndWaitTime = 1;
     private static float DampTime = .2f;

@@ -25,8 +25,6 @@ public class PlayerWeaponControl : MonoBehaviour {
     private int currentLeftWeaponIndex = 0;
     private int currentRightWeaponIndex = 0;
 
-    private int numLeftGuns = 0;
-
     private bool leftMouseButtonClicked = false;
     private bool rightMouseButtonClicked = false;
 
