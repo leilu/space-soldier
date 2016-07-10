@@ -4,13 +4,12 @@ using System.Collections;
 public class Seed : MonoBehaviour {
 
     private Rigidbody2D rb2d;
-    private SpriteRenderer spriteRenderer;
     private GameObject plantEnemyPrefab;
+    GameObject spawnedPlant;
 
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         plantEnemyPrefab = Resources.Load("Knight") as GameObject;
     }
 
@@ -23,7 +22,8 @@ public class Seed : MonoBehaviour {
 
     void Grow()
     {
-        Instantiate(plantEnemyPrefab, transform.position, Quaternion.identity);
+        spawnedPlant = Instantiate(plantEnemyPrefab, transform.position, Quaternion.identity) as GameObject;
+        GameState.LockOnTargets.Add(spawnedPlant.GetComponent<LockOnIndicator>());
         gameObject.SetActive(false);
     }
 

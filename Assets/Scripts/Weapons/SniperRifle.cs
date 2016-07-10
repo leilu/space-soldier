@@ -18,7 +18,7 @@ public class SniperRifle : Weapon
 
     private LineRenderer lineRenderer; 
     private RaycastHit2D lineRendererHit;
-    private RaycastHit2D scopeLinecastHit;
+    private RaycastHit2D[] scopeLinecastHits;
     private RaycastHit2D miniCamLinecastHit;
     private PlayerMovement playerMovement;
     private GameObject sniperMiniCam;
@@ -103,9 +103,26 @@ public class SniperRifle : Weapon
             Vector2 origin = (Vector2)transform.position + GetStandardOffset();
             if (EnemyUtil.IsOnScreen(indicator.transform.position))
             {
-                scopeLinecastHit = Physics2D.Linecast(origin, indicator.transform.position,
+                scopeLinecastHits = Physics2D.LinecastAll(origin, indicator.transform.position,
                     LayerMasks.PlayerSniperLayerMask);
-                if (scopeLinecastHit != null && scopeLinecastHit.transform == indicator.transform)
+
+                bool isHit = false;
+
+                for (int i = 0; i < scopeLinecastHits.Length; i++)
+                {
+                    if (scopeLinecastHits[i].transform.tag != "Enemy")
+                    {
+                        break;
+                    }
+
+                    if (scopeLinecastHits[i].transform == indicator.transform)
+                    {
+                        isHit = true;
+                        break;
+                    }
+                }
+
+                if (isHit)
                 {
                     indicator.Activate();
                 } else
@@ -133,17 +150,10 @@ public class SniperRifle : Weapon
 
     void RepositionSniperMiniCam()
     {
-        Vector2 playerViewportPos = Camera.main.WorldToViewportPoint(Player.PlayerTransform.position);
-
         float yViewportOffset = sniperMiniCamOffset / (Camera.main.orthographicSize * 2);
         float xViewportOffset = sniperMiniCamOffset / (Camera.main.orthographicSize * 2 * Camera.main.aspect);
 
         float miniCamViewportX = xViewportOffset, miniCamViewportY = 1 - yViewportOffset;
-
-        //if (playerViewportPos.x <= miniCamEdgeThreshold && playerViewportPos.y >= .8f -  miniCamEdgeThreshold)
-        //{
-        //    miniCamViewportY -= .2f;
-        //}
 
         Vector2 miniCamWorldCoords = Camera.main.ViewportToWorldPoint(new Vector2(miniCamViewportX, miniCamViewportY));
         sniperMiniCam.transform.position = new Vector3(miniCamWorldCoords.x, miniCamWorldCoords.y, 0);

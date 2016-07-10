@@ -320,7 +320,6 @@ public class BasicLevelDecorator {
     void AttemptLakeCreation(int x, int y, int[,] tracker)
     {
         List<Int2> islandMembers = new List<Int2>();
-        bool[,] seenThisIteration = new bool[level.GetLength(0), level.GetLength(1)];
         bool touchingEdge = false;
 
         Queue<Int2> queue = new Queue<Int2>();

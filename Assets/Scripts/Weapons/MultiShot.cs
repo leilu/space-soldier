@@ -14,7 +14,6 @@ public class MultiShot : Weapon
         {
             nextFiringTime = Time.time + FiringDelay;
             int numberOfShots = GetNumberOfShots();
-            bool evenNumberOfShots = numberOfShots % 2 == 0;
 
             Vector2 direction = VectorUtil.DirectionToMousePointer(transform);
 

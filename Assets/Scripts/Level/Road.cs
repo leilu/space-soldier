@@ -22,7 +22,7 @@ public class Road {
         Endpoint1 = new Vector2(x1, y1);
         Endpoint2 = new Vector2(x2, y2);
         Side = side;
-        GameObject someObj = MonoBehaviour.Instantiate(Resources.Load("RoadRenderer")) as GameObject;
+        MonoBehaviour.Instantiate(Resources.Load("RoadRenderer"));
 
         // TODO: Fix Offset if I need to use this again for debugging.
         //if (colorCode != 0)

@@ -103,7 +103,7 @@ public class MeleeEnemyAI : EnemyAI {
         rb2d.velocity = Vector2.zero;
     }
 
-    void DeactivateChase()
+    new void DeactivateChase()
     {
         chasing = false;
     }

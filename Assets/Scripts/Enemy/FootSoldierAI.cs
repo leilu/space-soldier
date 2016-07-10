@@ -17,7 +17,6 @@ public class FootSoldierAI : EnemyAI {
     private int shotsFiredThisMovement = 0;
     private Wander wanderScript;
     private int numMovementAttempts;
-    private Vector2 previousVelocity = Vector2.zero;
     private Vector2 colliderSize;
     private Animator animator;
 

@@ -93,7 +93,7 @@ public class CameraControl : MonoBehaviour {
 
     void HandleMouseLookaround(ref Vector3 targetPosition)
     {
-        float screenHeightUnits = Screen.height / (Camera.main.orthographicSize * 2);
+        float screenHeightUnits = Camera.main.orthographicSize * 2;
 
         if (Input.mousePosition.y >= Screen.height * cameraEdgeThreshold)
         {

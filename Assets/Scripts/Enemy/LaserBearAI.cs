@@ -5,7 +5,6 @@ public class LaserBearAI : EnemyAI {
     private Rigidbody2D rb2d;
     private BasicEnemyFire enemyFireScript;
     private Wander wanderScript;
-    private Vector2 colliderSize;
     private Animator animator;
 
     [SerializeField]
@@ -13,8 +12,6 @@ public class LaserBearAI : EnemyAI {
 
     private float nextActionTime;
     private float walkEndTime;
-    private float lastWalkDir = -1;
-    private bool charging = false;
     private bool hitInProgress = false;
 
     void Awake ()
@@ -23,7 +20,6 @@ public class LaserBearAI : EnemyAI {
         rb2d = GetComponent<Rigidbody2D>();
         enemyFireScript = GetComponent<BasicEnemyFire>();
         wanderScript = GetComponent<Wander>();
-        colliderSize = GetComponent<BoxCollider2D>().size;
         animator = GetComponent<Animator>();
     }
 
@@ -75,7 +71,6 @@ public class LaserBearAI : EnemyAI {
             animator.SetBool("Walking", true);
             float walkDir = rb2d.velocity.x < 0 ? 0 : 1;
             animator.SetFloat("Facing", walkDir);
-            lastWalkDir = walkDir;
         }
 
         chasing = animator.GetBool("Charging");

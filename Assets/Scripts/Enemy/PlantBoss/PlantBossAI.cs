@@ -44,13 +44,11 @@ public class PlantBossAI : MonoBehaviour {
     private int seedCount;
 
     private StackPool projectilePool;
-    private Rigidbody2D rb2d;
     private GameObject seedPrefab;
     private EnemyHealth enemyHealth;
 
 	void Awake () {
         seedPrefab = Resources.Load("Seed") as GameObject;
-        rb2d = GetComponent<Rigidbody2D>();
         projectilePool = GameObject.Find(projectilePoolName).GetComponent<StackPool>();
         Fsm = new FiniteStateMachine<PlantBossAI>(this, PlantBossSleepState.Instance);
         enemyHealth = GetComponent<EnemyHealth>();

@@ -29,7 +29,6 @@ public class BasicLevelAlgorithm {
         set2DArrayDefaults(level);
 
         Int2 current = new Int2(numTiles, numTiles);
-        Int2 mostRecentDir = new Int2(0, 0);
         // Consider refactoring the boss room logic into a separate method entirely since it is starting
         // to deviate more and more.
         Int2 bossRoomWallEntrance = new Int2(0, 0);

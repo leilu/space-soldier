@@ -59,7 +59,6 @@ public class CityDecorator {
                     Building selectedBuilding = SelectBuilding((int)curr.width, (int)curr.height, (int)curr.yMin, AllowedBuildingSizeDiff, ceiling);
                     if (selectedBuilding !=  null)
                     {
-                        int rowOffset = Random.Range(0, (int)curr.height - selectedBuilding.NumBaseRows + 1);
                         int colOffset = Random.Range(0, (int)curr.width - selectedBuilding.NumCols + 1);
 
                         selectedBuilding.Render(CityGridCreator.NormalizeY((int)curr.y + 0), CityGridCreator.NormalizeX((int)curr.x + colOffset), tilemap);

@@ -10,7 +10,6 @@ public class SniperAI : EnemyAI {
     private float nextFiringTime = 0;
     private bool isAiming = false;
     private Animator animator;
-    private Camera mainCam;
     private Wander wanderScript;
     private Rigidbody2D rb2d;
     private LineRenderer lineRenderer;
@@ -26,7 +25,6 @@ public class SniperAI : EnemyAI {
 	void Awake () {
         projectilePool = GameObject.Find("FireballPool").GetComponent<StackPool>();
         animator = GetComponent<Animator>();
-        mainCam = GameObject.Find("Main Camera").GetComponent<Camera>();
         wanderScript = GetComponent<Wander>();
         rb2d = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();
@@ -42,7 +40,6 @@ public class SniperAI : EnemyAI {
             return;
         }
 
-        Vector2 enemyPosition = transform.position;
         Vector2 playerPosition = Player.PlayerTransform.position;
 
         if(sniperWasHit)
