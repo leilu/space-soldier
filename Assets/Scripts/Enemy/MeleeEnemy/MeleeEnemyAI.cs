@@ -18,18 +18,17 @@ public class MeleeEnemyAI : EnemyAI {
     public float squaredAttackDistance;
     public BoxCollider2D boxCollider2d;
     public FiniteStateMachine<MeleeEnemyAI> fsm;
-    public Animator animator;
 
     private Rigidbody2D rb2d;
     private Wander wanderScript;
     private float lastPathfindTime = 0;
 
 	void Awake () {
+        Init();
         squaredAttackDistance = attackDistance * attackDistance;
 
         rb2d = GetComponent<Rigidbody2D>();
         boxCollider2d = GetComponent<BoxCollider2D>();
-        animator = GetComponent<Animator>();
         wanderScript = GetComponent<Wander>();
         fsm = new FiniteStateMachine<MeleeEnemyAI>(this, MeleeEnemyIdleState.Instance);
 

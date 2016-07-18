@@ -24,6 +24,7 @@ public class Seed : MonoBehaviour {
     {
         spawnedPlant = Instantiate(plantEnemyPrefab, transform.position, Quaternion.identity) as GameObject;
         GameState.LockOnTargets.Add(spawnedPlant.GetComponent<LockOnIndicator>());
+        GameState.Enemies.Add(spawnedPlant.GetComponent<EnemyAI>());
         gameObject.SetActive(false);
     }
 

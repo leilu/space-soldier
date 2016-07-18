@@ -30,7 +30,8 @@ public class BasicEnemyFire : EnemyWeapon {
 
             projectile.SetActive(true);
 
-            projectile.GetComponent<Rigidbody2D>().velocity = VectorUtil.RotateVector(projectileSpeed * offset.normalized, Mathf.Deg2Rad * missAmountDegrees);
+            projectile.GetComponent<Rigidbody2D>().velocity = VectorUtil.RotateVector(projectileSpeed * offset.normalized,
+                Mathf.Deg2Rad * missAmountDegrees);
             return 1;
         }
 

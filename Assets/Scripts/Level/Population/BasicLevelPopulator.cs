@@ -39,6 +39,7 @@ public class BasicLevelPopulator
                     {
                         totalNumEnemiesPlaced++;
                         GameState.LockOnTargets.Add(obj.GetComponent<LockOnIndicator>());
+                        GameState.Enemies.Add(obj.GetComponent<EnemyAI>());
                     }
 
                     numEntitiesOfTypePlaced++;

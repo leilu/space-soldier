@@ -18,17 +18,16 @@ public class FootSoldierAI : EnemyAI {
     private Wander wanderScript;
     private int numMovementAttempts;
     private Vector2 colliderSize;
-    private Animator animator;
 
     private EnemyWeapon weapon;
 
     void Awake()
     {
+        Init();
         rb2d = GetComponent<Rigidbody2D>();
         wanderScript = GetComponent<Wander>();
         colliderSize = GetComponent<BoxCollider2D>().size;
         weapon = GetComponent<EnemyWeapon>();
-        animator = GetComponent<Animator>();
     }
 
     void Update()

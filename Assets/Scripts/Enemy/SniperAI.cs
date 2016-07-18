@@ -9,7 +9,6 @@ public class SniperAI : EnemyAI {
 
     private float nextFiringTime = 0;
     private bool isAiming = false;
-    private Animator animator;
     private Wander wanderScript;
     private Rigidbody2D rb2d;
     private LineRenderer lineRenderer;
@@ -23,8 +22,9 @@ public class SniperAI : EnemyAI {
     private float rangeSquared;
 
 	void Awake () {
+        Init();
+
         projectilePool = GameObject.Find("FireballPool").GetComponent<StackPool>();
-        animator = GetComponent<Animator>();
         wanderScript = GetComponent<Wander>();
         rb2d = GetComponent<Rigidbody2D>();
         lineRenderer = GetComponent<LineRenderer>();

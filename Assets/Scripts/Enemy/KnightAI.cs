@@ -16,12 +16,11 @@ public class KnightAI : EnemyAI {
 
     private EnemyHealth enemyHealth;
     private BasicEnemyFire firingScript;
-    private Animator animator;
 
 	void Awake () {
+        Init();
         enemyHealth = GetComponent<EnemyHealth>();
         firingScript = GetComponent<BasicEnemyFire>();
-        animator = GetComponent<Animator>();
 
         ActivateGuard();
 	}

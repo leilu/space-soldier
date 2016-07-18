@@ -5,7 +5,6 @@ public class LaserBearAI : EnemyAI {
     private Rigidbody2D rb2d;
     private BasicEnemyFire enemyFireScript;
     private Wander wanderScript;
-    private Animator animator;
 
     [SerializeField]
     private float hitDuration;
@@ -16,11 +15,11 @@ public class LaserBearAI : EnemyAI {
 
     void Awake ()
     {
+        Init();
         nextActionTime = 0;
         rb2d = GetComponent<Rigidbody2D>();
         enemyFireScript = GetComponent<BasicEnemyFire>();
         wanderScript = GetComponent<Wander>();
-        animator = GetComponent<Animator>();
     }
 
 

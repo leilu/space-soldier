@@ -19,6 +19,8 @@ public class KirbyAI : EnemyAI {
     public float pathFindingRate;
 
     void Awake () {
+        Init();
+
         squaredGuardRange = guardRange * guardRange;
         lineRenderer = GetComponent<LineRenderer>();
         fsm = new FiniteStateMachine<KirbyAI>(this, KirbySeekingState.Instance);

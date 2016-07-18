@@ -31,6 +31,7 @@ public class EnemyDeath : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "Killed";
 
             GameState.LockOnTargets.Remove(gameObject.GetComponent<LockOnIndicator>());
+            GameState.Enemies.Remove(gameObject.GetComponent<EnemyAI>());
 
             if (GameState.TutorialMode)
             {

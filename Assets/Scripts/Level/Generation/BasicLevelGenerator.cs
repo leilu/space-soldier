@@ -115,7 +115,7 @@ public class BasicLevelGenerator : ILevelGenerator
         return new List<SpawnData> {
             //new SpawnData(3, 3, basicEnemyPrefab),
             new SpawnData(2, 4, footSoldierPrefab),
-            new SpawnData(2, 5, gordoPrefab),
+            new SpawnData(1, 1, gordoPrefab),
             new SpawnData(2, 2, knightPrefab),
             new SpawnData(1, 3, laserBearPrefab)
             //new SpawnData(config.gordoTrapMinMax.x, config.gordoTrapMinMax.y, gordoTrapPrefab, false),

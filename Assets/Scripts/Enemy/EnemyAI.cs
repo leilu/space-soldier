@@ -14,8 +14,15 @@ public class EnemyAI : MonoBehaviour {
     public bool killed = false;
     public float KnockbackEndTime = 0;
     public bool KnockbackInProgress = false;
+    public Animator animator;
+    private float previousSpeed;
 
-    //TODO: Add jitter so everyone isn't checking at the same time.
+    protected void Init()
+    {
+        // TODO:  add more stuff to this init to reduce code duplication
+        animator = GetComponent<Animator>();
+    }
+
     private float nextChaseCheckTime = 0;
 
     protected void ChaseIfNecessary()
@@ -41,5 +48,18 @@ public class EnemyAI : MonoBehaviour {
         chasing = false;
         // To prevent enemies from perpetually chasing due to immediately reactivating chase after idling.
         nextChaseCheckTime = Time.time + chaseCheckCooldown;
+    }
+
+    public void SlowDown()
+    {
+        previousSpeed = speed;
+        speed *= GameState.TimeDilationScale;
+        animator.speed = GameState.TimeDilationScale;
+    }
+
+    public void RestoreSpeed()
+    {
+        speed = previousSpeed;
+        animator.speed = 1;
     }
 }

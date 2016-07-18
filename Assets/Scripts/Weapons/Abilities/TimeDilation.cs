@@ -6,16 +6,40 @@ public class TimeDilation : Weapon {
     private TimeDilationEffect effect;
     [SerializeField]
     private float energyRequirement;
+    [SerializeField]
+    private float duration;
+    [SerializeField]
+    private float timeDilationScale;
 
     public override float Click ()
     {
         if (CanFire())
         {
+            nextFiringTime = Time.time + FiringDelay;
             effect.ActivateEffect();
+            GameState.TimeDilationScale = timeDilationScale;
+
+            for (int i = 0; i < GameState.Enemies.Count; i++)
+            {
+                GameState.Enemies[i].SlowDown();
+            }
+
+            CancelInvoke("ResetTimeScale");
+            Invoke("ResetTimeScale", duration);
             return energyRequirement;
         }
 
         return 0;
+    }
+
+    void ResetTimeScale()
+    {
+        GameState.TimeDilationScale = 1;
+
+        for (int i = 0; i < GameState.Enemies.Count; i++)
+        {
+            GameState.Enemies[i].RestoreSpeed();
+        }
     }
 
     public override string GetDescription ()
@@ -37,6 +61,7 @@ public class TimeDilation : Weapon {
     {
         Dictionary<string, object> dict = new Dictionary<string, object>();
         dict.Add(WeaponProperties.EnergyCost, GetEnergyRequirement());
+        dict.Add(WeaponProperties.Duration, duration);
         return dict;
     }
 }

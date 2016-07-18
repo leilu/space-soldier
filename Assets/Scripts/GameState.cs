@@ -7,7 +7,9 @@ public class GameState : MonoBehaviour {
     public static bool InputLocked = false;
     public static bool TutorialMode = false;
     public static bool IsBossFight = false;
+    public static float TimeDilationScale = 1;
     public static List<LockOnIndicator> LockOnTargets = new List<LockOnIndicator>();
+    public static List<EnemyAI> Enemies = new List<EnemyAI>(); // separate list to avoid component lookups
 
     // These are for score tracking (to display at the end of the game)
     public static int NumEnemiesKilled = 0;
