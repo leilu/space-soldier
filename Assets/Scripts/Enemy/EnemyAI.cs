@@ -16,11 +16,13 @@ public class EnemyAI : MonoBehaviour {
     public bool KnockbackInProgress = false;
     public Animator animator;
     private float previousSpeed;
+    private bool slow;
 
     protected void Init()
     {
         // TODO:  add more stuff to this init to reduce code duplication
         animator = GetComponent<Animator>();
+        slow = false;
     }
 
     private float nextChaseCheckTime = 0;
@@ -52,14 +54,19 @@ public class EnemyAI : MonoBehaviour {
 
     public void SlowDown()
     {
-        previousSpeed = speed;
-        speed *= GameState.TimeDilationScale;
-        animator.speed = GameState.TimeDilationScale;
+        if (!slow)
+        {
+            slow = true;
+            previousSpeed = speed;
+            speed *= GameState.TimeDilationScale;
+            animator.speed = GameState.TimeDilationScale;
+        }
     }
 
     public void RestoreSpeed()
     {
         speed = previousSpeed;
         animator.speed = 1;
+        slow = false;
     }
 }

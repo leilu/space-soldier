@@ -3,13 +3,23 @@ using System.Collections.Generic;
 
 public class TimeDilation : Weapon {
     [SerializeField]
-    private TimeDilationEffect effect;
-    [SerializeField]
     private float energyRequirement;
     [SerializeField]
     private float duration;
     [SerializeField]
     private float timeDilationScale;
+
+    private TimeDilationEffect effect;
+
+    void Awake ()
+    {
+        effect = Camera.main.GetComponent<TimeDilationEffect>();
+    }
+
+    void OnLevelWasLoaded()
+    {
+        effect = Camera.main.GetComponent<TimeDilationEffect>();
+    }
 
     public override float Click ()
     {
