@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyHealth : MonoBehaviour {
     public bool guarded = false;
@@ -8,11 +8,15 @@ public class EnemyHealth : MonoBehaviour {
     private EnemyDeath enemyDeath;
     private Animator animator;
 
+    private List<StickyBomb> attachedStickyBombs;
+
     void Awake()
     {
         enemyAI = GetComponent<EnemyAI>();
         enemyDeath = GetComponent<EnemyDeath>();
         animator = GetComponent<Animator>();
+
+        attachedStickyBombs = new List<StickyBomb>();
     }
 
     public int health = 20;
@@ -29,7 +33,10 @@ public class EnemyHealth : MonoBehaviour {
             return;
         }
 
+        DetonateStickyBombs();
+
         health -= damagePoints;
+
         if (enemyAI)
         {
             enemyAI.chasing = true;
@@ -46,8 +53,26 @@ public class EnemyHealth : MonoBehaviour {
         }
     }
 
+    void DetonateStickyBombs()
+    {
+        for (int i = 0; i < attachedStickyBombs.Count; i++)
+        {
+            attachedStickyBombs[i].Detonate();
+        }
+    }
+
     public void HitDone()
     {
         animator.SetBool("Hit", false);
+    }
+
+    public void AddStickyBomb(StickyBomb stickyBomb)
+    {
+        attachedStickyBombs.Add(stickyBomb);
+    }
+
+    public void RemoveStickyBomb(StickyBomb stickyBomb)
+    {
+        attachedStickyBombs.Remove(stickyBomb);
     }
 }
