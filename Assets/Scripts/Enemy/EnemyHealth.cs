@@ -7,6 +7,8 @@ public class EnemyHealth : MonoBehaviour {
     private EnemyAI enemyAI;
     private EnemyDeath enemyDeath;
     private Animator animator;
+    private Material customSpriteMaterial;
+    private float damageTakenMultiplier;
 
     private List<StickyBomb> attachedStickyBombs;
 
@@ -15,11 +17,12 @@ public class EnemyHealth : MonoBehaviour {
         enemyAI = GetComponent<EnemyAI>();
         enemyDeath = GetComponent<EnemyDeath>();
         animator = GetComponent<Animator>();
+        customSpriteMaterial = GetComponent<SpriteRenderer>().material;
 
         attachedStickyBombs = new List<StickyBomb>();
     }
 
-    public int health = 20;
+    public float health = 20;
 
     public void InflictDamage(int damagePoints)
     {
@@ -35,7 +38,7 @@ public class EnemyHealth : MonoBehaviour {
 
         DetonateStickyBombs();
 
-        health -= damagePoints;
+        health -= damagePoints * damageTakenMultiplier;
 
         if (enemyAI)
         {
@@ -51,6 +54,19 @@ public class EnemyHealth : MonoBehaviour {
             animator.SetFloat("HitFromDirX", velocity.x > 0 ? 0 : 1);
             animator.SetFloat("HitFromDirY", velocity.y > 0 ? 1 : 0);
         }
+    }
+
+    public void InflictPoison(float poisonDamageMultiplier, float duration)
+    {
+        damageTakenMultiplier = poisonDamageMultiplier;
+        customSpriteMaterial.SetFloat("_PoisonFlag", 1);
+        Invoke("EndPoison", duration);
+    }
+
+    void EndPoison()
+    {
+        damageTakenMultiplier = 1;
+        customSpriteMaterial.SetFloat("_PoisonFlag", 0);
     }
 
     void DetonateStickyBombs()
