@@ -115,6 +115,7 @@ Shader "Sprites/Silhouette"
 			v2f vert(appdata_t IN)
 			{
 				v2f OUT;
+				UNITY_INITIALIZE_OUTPUT(v2f, OUT);
 				OUT.vertex = mul(UNITY_MATRIX_MVP, IN.vertex);
 				OUT.texcoord = IN.texcoord;
 				#ifdef PIXELSNAP_ON
