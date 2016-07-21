@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class MultiShotLogic : MonoBehaviour {
 
@@ -18,7 +17,7 @@ public class MultiShotLogic : MonoBehaviour {
         for (int i = 0; i < numberOfShots; i++)
         {
             int multiplier = i % 2 == 0 ? 1 : -1;
-            float angle = evenNumberOfShots ? (multiplier * degreesBetweenShots / 2) + ((i / 2) * multiplier * degreesBetweenShots * Mathf.Deg2Rad) :
+            float angle = evenNumberOfShots ? ((i / 2) * multiplier * degreesBetweenShots * Mathf.Deg2Rad) :
                 (i / 2 + 1) * multiplier * degreesBetweenShots * Mathf.Deg2Rad;
 
             createAndActivateBullet(direction, angle, originTransform, stackPool, damage, projectileSpeed, firedByPlayer);

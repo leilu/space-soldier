@@ -66,6 +66,7 @@ public class SkillTreeNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             Points++;
             pointsText.text = Points.ToString();
+            weapon.IncrementPoints();
             // Increment the points in the skill GameObject (TODO: Add a method for incrementing points in the weapon class).
         }
     }

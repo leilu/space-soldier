@@ -34,7 +34,7 @@ public abstract class Weapon : MonoBehaviour
         return Time.time > nextFiringTime;
     }
 
-    public void AddPoints()
+    public void IncrementPoints()
     {
         Points++;
     }

@@ -28,7 +28,7 @@ public class MultiShot : Weapon
 
     int GetNumberOfShots()
     {
-        return Points + 3;
+        return Points + 2;
     }
 
     public override float GetEnergyRequirement()
