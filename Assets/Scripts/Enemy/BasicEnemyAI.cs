@@ -28,7 +28,7 @@ public class BasicEnemyAI : EnemyAI {
 
     void Update()
     {
-        if (KnockbackInProgress || GameSettings.PauseAllEnemies)
+        if (KnockbackInProgress || GameSettings.PauseAllEnemies || frozen)
         {
             return;
         }

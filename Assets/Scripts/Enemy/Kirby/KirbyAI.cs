@@ -30,7 +30,7 @@ public class KirbyAI : EnemyAI {
 	}
 	
 	void Update () {
-        if (Time.time < KnockbackEndTime || GameSettings.PauseAllEnemies)
+        if (Time.time < KnockbackEndTime || GameSettings.PauseAllEnemies || frozen)
         {
             return;
         }

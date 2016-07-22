@@ -32,7 +32,7 @@ public class FootSoldierAI : EnemyAI {
 
     void Update()
     {
-        if (KnockbackInProgress || GameSettings.PauseAllEnemies || killed)
+        if (KnockbackInProgress || GameSettings.PauseAllEnemies || killed || frozen)
         {
             return;
         }

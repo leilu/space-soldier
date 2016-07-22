@@ -3,14 +3,11 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class PoisonDartAbility : Weapon
-{
+public class IceDartAbility : Weapon {
     [SerializeField]
     private float energyCost;
     [SerializeField]
-    private float damageMultiplier;
-    [SerializeField]
-    private float duration;
+    private float freezeDuration;
 
     public override float Click ()
     {
@@ -20,10 +17,10 @@ public class PoisonDartAbility : Weapon
             GameObject obj = StackPool.Pop();
             Vector2 addend = GetStandardOffset();
             obj.transform.position = new Vector2(transform.position.x + addend.x, transform.position.y + addend.y);
-            PoisonDart dart = obj.GetComponent<PoisonDart>();
-            dart.DamageMultiplier = damageMultiplier;
-            dart.Duration = duration;
+            IceDart dart = obj.GetComponent<IceDart>();
+            dart.FreezeDuration = freezeDuration;
             FireStandardProjectile(obj);
+            Debug.Log("fire dat b?");
 
             return energyCost;
         }
@@ -33,7 +30,7 @@ public class PoisonDartAbility : Weapon
 
     public override string GetDescription ()
     {
-        return "Makes enemies take more damage from all attacks.";
+        return "Freeze enemies temporarily";
     }
 
     public override float GetEnergyRequirement ()
@@ -43,15 +40,14 @@ public class PoisonDartAbility : Weapon
 
     public override string GetName ()
     {
-        return "Poison Dartz";
+        return "Ice Darts";
     }
 
     public override Dictionary<string, object> GetProperties ()
     {
         Dictionary<string, object> dict = new Dictionary<string, object>();
         dict.Add(WeaponProperties.EnergyCost, GetEnergyRequirement());
-        dict.Add(WeaponProperties.PoisonDuration, duration);
-        dict.Add(WeaponProperties.DamageMultiplier, damageMultiplier);
+        dict.Add(WeaponProperties.FreezeDuration, freezeDuration);
         return dict;
     }
 }

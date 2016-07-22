@@ -18,6 +18,7 @@ public class EnemyHealth : MonoBehaviour {
         enemyDeath = GetComponent<EnemyDeath>();
         animator = GetComponent<Animator>();
         customSpriteMaterial = GetComponent<SpriteRenderer>().material;
+        damageTakenMultiplier = 1;
 
         attachedStickyBombs = new List<StickyBomb>();
     }

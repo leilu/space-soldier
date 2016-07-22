@@ -6,4 +6,6 @@
     public static string ExplosiveRadius = "Explosive radius";
     public static string NumProjectiles = "Number of projectiles";
     public static string Duration = "Duration";
+    public static string PoisonDuration = "Poison duration";
+    public static string FreezeDuration = "Freeze duration";
 }

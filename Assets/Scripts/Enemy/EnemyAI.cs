@@ -17,12 +17,14 @@ public class EnemyAI : MonoBehaviour {
     public Animator animator;
     private float previousSpeed;
     private bool slow;
+    protected bool frozen;
 
     protected void Init()
     {
         // TODO:  add more stuff to this init to reduce code duplication
         animator = GetComponent<Animator>();
         slow = false;
+        frozen = false;
     }
 
     private float nextChaseCheckTime = 0;
@@ -68,5 +70,21 @@ public class EnemyAI : MonoBehaviour {
         speed = previousSpeed;
         animator.speed = 1;
         slow = false;
+    }
+
+    public void Freeze(float freezeDuration)
+    {
+        animator.speed = 0;
+        animator.enabled = false;
+        frozen = true;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        Invoke("Unfreeze", freezeDuration);
+    }
+
+    public void Unfreeze()
+    {
+        animator.speed = 1;
+        animator.enabled = true;
+        frozen = false;
     }
 }

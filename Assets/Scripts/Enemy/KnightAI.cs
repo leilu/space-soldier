@@ -27,7 +27,7 @@ public class KnightAI : EnemyAI {
 	
 	// Update is called once per frame
 	void Update () {
-        if (KnockbackInProgress || GameSettings.PauseAllEnemies || killed)
+        if (KnockbackInProgress || GameSettings.PauseAllEnemies || killed || frozen)
         {
             return;
         }

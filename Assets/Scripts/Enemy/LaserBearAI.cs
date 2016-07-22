@@ -24,7 +24,7 @@ public class LaserBearAI : EnemyAI {
 
 
     void Update () {
-        if (GameSettings.PauseAllEnemies)
+        if (GameSettings.PauseAllEnemies || frozen)
         {
             return;
         }
