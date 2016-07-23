@@ -52,7 +52,7 @@ public class CityGenerator : ILevelGenerator {
             //new SpawnData(5, 5, catPrefab)
         };
 
-        CityPopulator.spawnEnemies(spawnData, GetOpenSpawnPositions(grid, playerSpawn), playerSpawn);
+        CityPopulator.spawnEntities(spawnData, GetOpenSpawnPositions(grid, playerSpawn), playerSpawn);
         SetWallMaterials(wallMaterial);
     }
 
