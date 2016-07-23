@@ -58,6 +58,7 @@ public class EnemyAI : MonoBehaviour {
     {
         if (!slow)
         {
+            Debug.Log("slowin down, son");
             slow = true;
             previousSpeed = speed;
             speed *= GameState.TimeDilationScale;

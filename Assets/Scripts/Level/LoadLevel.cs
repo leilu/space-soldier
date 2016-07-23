@@ -45,6 +45,7 @@ public class LoadLevel : MonoBehaviour {
 
     void InitLevel()
     {
+        GameState.Enemies.Clear();
         Vector3 playerSpawn;
         GameObject player = GameObject.Find("Soldier");
         GameObject tileCam = GameObject.Find("TileCamera");

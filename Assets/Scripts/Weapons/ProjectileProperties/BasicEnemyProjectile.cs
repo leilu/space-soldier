@@ -11,9 +11,10 @@ public class BasicEnemyProjectile : MonoBehaviour {
     private float previousSpeed;
     public bool slow = false;
 
-    void Awake()
+    void OnEnable()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        slow = false;
     }
 
     void Update()
