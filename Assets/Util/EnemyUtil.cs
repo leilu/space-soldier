@@ -78,7 +78,7 @@ public class EnemyUtil {
             }
 
             Vector2 push = enemyPosition - nearbyEnemies[i].transform.position;
-            pushVector = push.sqrMagnitude == 0f ? Vector2.zero : push / push.sqrMagnitude;
+            pushVector += push.sqrMagnitude == 0f ? Vector2.zero : push / push.sqrMagnitude;
 
             contenders++;
         }
