@@ -53,7 +53,7 @@
 
 				float diff = d - t;
 				diff *= .75;
-				float m = clamp(1 - abs(diff * 1 / (_WaveCoreOffset * clamp(_DeltaTime / .2, 0, 1))), 0, 1);
+				float m = max(1 - abs(diff * 1 / (_WaveCoreOffset * clamp(_DeltaTime / .2, 0, 1))), 0);
 				m *= diff;
 				
 				float2 diffUV = normalize(i.uv - center);
